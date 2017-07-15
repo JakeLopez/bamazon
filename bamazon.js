@@ -28,7 +28,9 @@ connection.query("SELECT * FROM products", function(err, res){
     if(err) throw err;
     console.log("Here is a list of products")
     console.log("-----------------------------------")
-    console.log(res);
+    for (var i = 0; i < res.length; i++) {
+       console.log(res[i].item_id +  " | Product:  " + res[i].product_name + "\n" +   "    Dept: " + res[i].department_name + "\t" + " Price: $" + res[i].price + "\t" +  " Qty: " + res[i].stock_quantity + "\n" );    
+    }
     console.log("-----------------------------------")
 });
 }
@@ -80,6 +82,7 @@ function purchase(){
             ],
             function(error) {
                 if (error) throw err;
+                console.log("Your total is: $" + chosenItem.price * answer.howMany);
                 console.log("purchase complete");
                 selectAll();
             }
