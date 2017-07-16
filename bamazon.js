@@ -38,6 +38,7 @@ connection.query("SELECT * FROM products", function(err, res){
 purchase();
 
 function purchase(){
+
     connection.query("SELECT * FROM products", function(err, results){
     if (err) throw err;
     inquirer.prompt([
@@ -68,13 +69,15 @@ function purchase(){
          //if statement   
          }
        //for loop 
-       }
-    if (chosenItem.stock_quantity > parseInt(answer.howMany)) {
+    }
+    var quantityLeft = chosenItem.stock_quantity - parseInt(answer.howMany);
+    console.log("The result of the purchase leaves " + quantityLeft);
+    if (quantityLeft >= 0) {
         connection.query(
             "UPDATE products SET ? WHERE ?",
             [
                 {
-                    stock_quantity: answer.howMany 
+                    stock_quantity: quantityLeft 
                 },
                 {
                     item_id: chosenItem.item_id
